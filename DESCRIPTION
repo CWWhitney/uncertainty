@@ -1,0 +1,24 @@
+Package: uncertainty
+Type: Package
+Title: Calculates functions for assessing uncertainty
+Version: 0.1.0
+Date: 2021-06-07
+Author: Cory Whitney, Eike Luedeling
+Maintainer: Cory Whitney <cory.whitney@uni-bonn.de>
+Description: Calculates common functions for for use in assessing uncertainty.
+Depends: R (>= 2.10)
+Imports:
+    ggplot2, 
+    psych, 
+    stats, 
+    MASS,
+    graphics, 
+    assertthat
+License: GPL
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
