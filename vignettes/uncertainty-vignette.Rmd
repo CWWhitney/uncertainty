@@ -1,6 +1,6 @@
 ---
 title: "Uncertainty"
-author: Cory Whitney^a^, Eike Luedeling^a^ <br /> <small>^a^INRES-Horticultural Sciences, University of Bonn, Auf dem Huegel 6, 53121 Bonn, Germany <small/>
+author: Cory Whitney, Eike Luedeling 
 output:
       rmarkdown::html_vignette
 vignette: >
