@@ -39,7 +39,7 @@ varkernelslice <- function(in_var, out_var,
   }
   
   # Setting the variables to NULL first, appeasing R CMD check
-  in_outdata <- in_out <- ylab <- xlab <- NULL 
+  in_outdata <- in_out <- ylab <- xlab <- xvar <- yvar <- NULL 
   
   #add error stops with validate_that   
   assertthat::validate_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
@@ -61,12 +61,22 @@ varkernelslice <- function(in_var, out_var,
   #### kernel density estimation ####
   
   ## create a density surface with kde2d
-  in_outkernel <- MASS::kde2d(in_outdata$in_var, in_outdata$out_var, n = 100)
+  in_outkernel <- MASS::kde2d(x = in_outdata$in_var, 
+                              y = in_outdata$out_var, 
+                              n = 100)
+  
+  ## select x and y for the graphics::plot
+  Relative_probability <- in_outkernel$x
+  Output_values <- in_outkernel$z[, expectedin_var]
   
   ## cut through density kernel #####
-  graphics::plot(in_outkernel$x, in_outkernel$z[, expectedin_var], type = "l", 
-       ylab = ylab, xlab = xlab, 
-       col = "seagreen", lwd = 2)
+  graphics::plot(x = Relative_probability, 
+                 y = Output_values, 
+                 type = "l", 
+                 ylab = ylab, 
+                 xlab = xlab, 
+                 col = "seagreen", 
+                 lwd = 2)
   
   print("Estimated output variable value given the expected value of an influencing variable.")
 }
