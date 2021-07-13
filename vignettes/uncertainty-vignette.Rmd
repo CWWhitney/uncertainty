@@ -3,6 +3,9 @@ title: "Uncertainty"
 author: Cory Whitney, Eike Luedeling 
 output:
       rmarkdown::html_vignette
+bibliography:
+ - bib/packages.bib
+ - bib/papers.bib
 vignette: >
   %\VignetteIndexEntry{Uncertainty}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,6 +23,21 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r, warning = F, include = F}
+#install and load packages
+library(decisionSupport)
+library(ggplot2)
+library(plyr)
+library(rmarkdown)
+# devtools::install_github("CWWhitney/uncertainty")
+library(uncertainty)
+
+#Automatically write R package citation entries to a .bib file
+knitr::write_bib(c(.packages(), 
+                   'decisionSupport'), 'bib/packages.bib')
+
+```
+
 Create random influence variable {in_var} and outcome variable {out_var} data using `sample()`. 
 
 ```{r}
@@ -27,13 +45,13 @@ in_var <- sample(x = 10:500, size = 20, replace = TRUE)
 out_var <- sample(x = 1000:5000, size = 20, replace = TRUE)
 ```
 
-Using `varscatter()` create a scatter plot of an influence variable of interest {in_var} (x) and an outcome variable {out_var} (y) with associated and estimated densities with loess smooth linear fits density curves. Plot made with the scatter.hist() function in the plyr() package (Wickham 2011) in R (R Core Team 2017).  
+Using `varscatter()` create a scatter plot of an influence variable of interest {in_var} (x) and an outcome variable {out_var} (y) with associated and estimated densities with loess smooth linear fits density curves. Plot made with the `scatter.hist()` function in the `plyr()` package [@R-plyr] in R [@R-base].  
 
 ```{r, fig.width=7, fig.height=7}
 uncertainty::varscatter(in_var, out_var)
 ```
 
-Use `varkernel()` or another type of graphical representation of the same relationship. `varkernel()` performs a two-dimensional kernel density estimation for the expected value of the outcome variable {out_var} and the influence variable of interest {in_var} using the `kde2d()` function in the `MASS()` package (Venables and Ripley 2002). The function produces a matrix of the estimated density (z) of the expected value of the outcome variable {out_var} (y) and the influence variable of interest {in_var} (x). It looks slightly different than the scatter plot estimates above because the density function restricts the shape of the kernel to a bivariate normal kernel.
+Use `varkernel()` for another type of graphical representation of the same relationship. `varkernel()` performs a two-dimensional kernel density estimation for the expected value of the outcome variable {out_var} and the influence variable of interest {in_var} using the `kde2d()` function in the `MASS()` package from base R [@R-base]. The function produces a matrix of the estimated density (z) of the expected value of the outcome variable {out_var} (y) and the influence variable of interest {in_var} (x). It looks slightly different than the scatter plot estimates above because the density function restricts the shape of the kernel to a bivariate normal kernel.
 
 ```{r, fig.width=7, fig.height=7}
 uncertainty::varkernel(in_var, out_var)
@@ -62,7 +80,7 @@ uncertainty::varkernelslice(in_var, out_var, expectedin_var = 30)
 uncertainty::varviolin(in_var, out_var)
 ```
 
-`varviolin()` shows violin plots of influencing variable {in_var} values (x) and outcome variable {out_var} (y) values, with six different intervals of influencing variable {in_var} values. Plot made with `ggplot2()` (Wickham 2016).
+`varviolin()` shows violin plots of influencing variable {in_var} values (x) and outcome variable {out_var} (y) values, with six different intervals of influencing variable {in_var} values. Plot made with `ggplot2()` [@R-ggplot2].
 
 ## Probability of outcome variable given variable
 
@@ -74,12 +92,6 @@ uncertainty::varkernelslicerange(in_var, out_var, 100, 200)
 
 `varkernelslicerange()` plots the probabilities (shown along the y-axis) for the expected value of the outcome variable {out_var} (shown along the x-axis). As with `varkernelslice()` the probability values shown are relative, not absolute measures. They are the result of cuts through the density kernel `varkernel()`, which integrates to 1. 
 
-## References
+This document was generated using R Markdown [@R-rmarkdown].
 
-R Core Team (2017) R: A Language and Environment for Statistical Computing [R Version 3.4.1 (2017-06-30) “Single Candle”] 3.4.1.
-
-Venables, W. N., and B. D. Ripley (2002) Modern Applied Statistics with S. Fourth Edition. New York: Springer.
-
-Wickham, Hadley (2011) Plyr: Tools for Splitting, Applying and Combining Data, Version 1.4. Available Online at Cran. r-Project. Elegant Graphics for Data Analysis. Springer.
-
-
+# References
