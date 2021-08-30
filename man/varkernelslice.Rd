@@ -2,7 +2,8 @@
 % Please edit documentation in R/varkernelslice.R
 \name{varkernelslice}
 \alias{varkernelslice}
-\title{Estimated outcome variable values given the influencing variable, based on a slice of 'z' from the kernel density plot of the variable and out_var data.}
+\title{Estimated outcome variable values given the influencing variable, 
+based on a slice of 'z' from the kernel density plot of the variable and out_var data.}
 \usage{
 varkernelslice(
   in_var,

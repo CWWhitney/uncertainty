@@ -9,6 +9,7 @@ varviolin(
   out_var,
   xlab = "Influencing variable",
   ylab = "Outcome variable",
+  box_width = 0.1,
   legend_name = "Influencing Variable Intervals"
 )
 }
@@ -20,6 +21,8 @@ varviolin(
 \item{xlab}{is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".}
 
 \item{ylab}{is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".}
+
+\item{box_width}{is a number between 0 and 1 for the desire}
 
 \item{legend_name}{is a label for the legend, the default label is "Influencing Variable Intervals".}
 }

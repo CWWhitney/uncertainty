@@ -2,7 +2,9 @@
 % Please edit documentation in R/varkernelslicerange.R
 \name{varkernelslicerange}
 \alias{varkernelslicerange}
-\title{Estimated output variable values given the expected values of the influencing variable, based on a slice of 'z' from the Kernel density plot of the influencing variable and output variable data.}
+\title{Estimated output variable values given the expected values of the influencing variable, 
+based on a slice of 'z' from the Kernel density plot of the influencing variable and output 
+variable data.}
 \usage{
 varkernelslicerange(in_var, out_var, min_in_var, max_in_var)
 }

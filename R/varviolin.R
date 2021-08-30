@@ -9,6 +9,7 @@
 #' @param ylab is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".
 #' @param box_width is a number between 0 and 1 for the desire
 #' @param legend_name is a label for the legend, the default label is "Influencing Variable Intervals".
+#' @param ... arguments passed to ggplot2::theme
 #' 
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 aes
@@ -36,7 +37,8 @@ varviolin <- function(in_var, out_var,
                       xlab = "Influencing variable", 
                       ylab = "Outcome variable", 
                       box_width = 0.1,
-                      legend_name = "Influencing Variable Intervals") {
+                      legend_name = "Influencing Variable Intervals", 
+                      ...) {
   
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("Package \"ggplot2\" needed for this function to work. Please install it.",
@@ -70,19 +72,19 @@ varviolin <- function(in_var, out_var,
   
   ## violin plot with IQR cut_width
   in_outviolin <- ggplot2::ggplot(in_outdata, 
-                                  ggplot2::aes(x = ggplot2::cut_width(in_var, 
-                                                                  width = width), 
+                                  ggplot2::aes(x = ggplot2::cut_width(x = in_var, 
+                                                                      width = width, 
+                                                                      labels = FALSE), 
                                                y = out_var, 
-                                               color = ggplot2::cut_width(in_var, 
+                                               color = ggplot2::cut_width(x = in_var, 
                                                                           width = width))) +
     ggplot2::geom_violin() +
-    ggplot2::theme_classic() +
     ggplot2::geom_boxplot(width = box_width) +
     ggplot2::xlab(xlab) +
     ggplot2::ylab(ylab) +  
-    ggplot2::scale_color_discrete(name = legend_name) +
-    ggplot2::theme(legend.title = element_blank()) + 
-    ggtitle("Violin plots of influencing variable (x) and outcome variable (y) with intervals of the influencing variable.") 
+    ggplot2::scale_color_discrete(name = legend_name) + 
+    ggplot2::theme_classic() +
+    ggplot2::theme(...)  
   
   print(in_outviolin)
   

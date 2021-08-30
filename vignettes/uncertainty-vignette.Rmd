@@ -25,17 +25,17 @@ knitr::opts_chunk$set(
 
 ```{r, warning = F, include = F}
 #install and load packages
-library(decisionSupport)
 library(ggplot2)
-library(plyr)
 library(rmarkdown)
 # devtools::install_github("CWWhitney/uncertainty")
 library(uncertainty)
 
 #Automatically write R package citation entries to a .bib file
 knitr::write_bib(c(.packages(), 
-                   'decisionSupport'), 'bib/packages.bib')
+                   'ggplot2'), 'bib/packages.bib')
 
+#resolves an issue with the scientific style of numbers, like one can read inside this answer from @Paul Hiemstra: https://stackoverflow.com/a/25947542/4061993 from the documentation of ?options:
+options(scipen=999)
 ```
 
 Create random influence variable {in_var} and outcome variable {out_var} data using `sample()`. 
@@ -45,7 +45,7 @@ in_var <- sample(x = 10:500, size = 20, replace = TRUE)
 out_var <- sample(x = 1000:5000, size = 20, replace = TRUE)
 ```
 
-Using `varscatter()` create a scatter plot of an influence variable of interest {in_var} (x) and an outcome variable {out_var} (y) with associated and estimated densities with loess smooth linear fits density curves. Plot made with the `scatter.hist()` function in the `plyr()` package [@R-plyr] in R [@R-base].  
+Using `varscatter()` create a scatter plot of an influence variable of interest {in_var} (x) and an outcome variable {out_var} (y) with associated and estimated densities with loess smooth linear fits density curves. Plot made with the `scatter.hist()` function in the `psych()` package [@R-psych] in R [@R-base].  
 
 ```{r, fig.width=7, fig.height=7}
 uncertainty::varscatter(in_var, out_var)
