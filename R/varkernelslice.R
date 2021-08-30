@@ -1,4 +1,5 @@
-#' Estimated outcome variable values given the influencing variable, based on a slice of 'z' from the kernel density plot of the variable and out_var data.
+#' Estimated outcome variable values given the influencing variable, 
+#' based on a slice of 'z' from the kernel density plot of the variable and out_var data.
 #'
 #' Plot representing probabilities (shown along the y-axis) for the expected value of the outcome variable (shown along the x-axis). 
 #' This is a cut through the density kernel from uncertainty::varkernel() function, which integrates to 1, the probability values are relative, not absolute measures.

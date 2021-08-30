@@ -65,22 +65,28 @@ varviolin <- function(in_var, out_var,
   assertthat::see_if(length(in_out) == length(in_outdata), msg = "Rows with NA were removed.")
   
   ## a method to calculate the optimal bin width for the violin plots 
-  ## after the Freedman-Diaconis rule (IQR = interquartile range, buildt-in):
-  width <- 2 * stats::IQR(in_outdata$in_var) / length(in_outdata$in_var)^(1/3)
+  ## after the Freedman-Diaconis rule (IQR = interquartile range from stats):
+  width <- stats::IQR(in_outdata$in_var)
   
   ## violin plot with IQR cut_width
-  in_outviolin <- ggplot2::ggplot(in_outdata, ggplot2::aes(ggplot2::cut_width(in_var, width = width), out_var, 
-                          color = ggplot2::cut_width(in_var, width = width))) +
+  in_outviolin <- ggplot2::ggplot(in_outdata, 
+                                  ggplot2::aes(x = ggplot2::cut_width(in_var, 
+                                                                  width = width), 
+                                               y = out_var, 
+                                               color = ggplot2::cut_width(in_var, 
+                                                                          width = width))) +
     ggplot2::geom_violin() +
     ggplot2::theme_classic() +
     ggplot2::geom_boxplot(width = box_width) +
     ggplot2::xlab(xlab) +
     ggplot2::ylab(ylab) +  
-    ggplot2::scale_color_discrete(name = legend_name)
+    ggplot2::scale_color_discrete(name = legend_name) +
+    ggplot2::theme(legend.title = element_blank()) + 
+    ggtitle("Violin plots of influencing variable (x) and outcome variable (y) with intervals of the influencing variable.") 
   
   print(in_outviolin)
   
-  print("Violin plots of influencing variable (x) and outcome variable (y) with six different intervals of the influencing variable.")
+  print("Violin plots of influencing variable (x) and outcome variable (y) with IQR intervals of the influencing variable.")
 
   }
 
