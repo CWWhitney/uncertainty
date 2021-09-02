@@ -61,7 +61,7 @@ varkernelslice <- function(in_var, out_var,
   
   #### kernel density estimation ####
   
-  ## create a density surface with kde2d
+  ## create a density surface with kde2d with 100 grid points
   in_outkernel <- MASS::kde2d(x = in_outdata$in_var, 
                               y = in_outdata$out_var, 
                               n = 100)

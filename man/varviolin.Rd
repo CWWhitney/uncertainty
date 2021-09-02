@@ -10,7 +10,8 @@ varviolin(
   xlab = "Influencing variable",
   ylab = "Outcome variable",
   box_width = 0.1,
-  legend_name = "Influencing Variable Intervals"
+  legend_name = "Influencing Variable Intervals",
+  ...
 )
 }
 \arguments{
@@ -22,12 +23,14 @@ varviolin(
 
 \item{ylab}{is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".}
 
-\item{box_width}{is a number between 0 and 1 for the desire}
+\item{box_width}{is a number between 0 and 1 for the desired width of the violins in the plot. The default is 0.1.}
 
 \item{legend_name}{is a label for the legend, the default label is "Influencing Variable Intervals".}
+
+\item{...}{arguments passed to ggplot2::theme}
 }
 \description{
-Violin plots of values of an influencing variable (x) and an outcome variable (y) with six different intervals of the influencing variable.
+Violin plots of values of an influencing variable (x) and an outcome variable (y) with different intervals of the influencing variable.
 Determine different possible variable intervals by calculating the optimal interval width for the given variable using the IQR() function in the stats() package of R, after the Freedman-Diaconis rule (IQR = interquartile range).
 }
 \examples{

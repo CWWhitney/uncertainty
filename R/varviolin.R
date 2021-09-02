@@ -1,13 +1,13 @@
 #' Create a scatter plot of an influencing variable and an outcome variable
 #'
-#' Violin plots of values of an influencing variable (x) and an outcome variable (y) with six different intervals of the influencing variable.
+#' Violin plots of values of an influencing variable (x) and an outcome variable (y) with different intervals of the influencing variable.
 #' Determine different possible variable intervals by calculating the optimal interval width for the given variable using the IQR() function in the stats() package of R, after the Freedman-Diaconis rule (IQR = interquartile range).
 #'
 #' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
 #' @param xlab is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".
 #' @param ylab is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".
-#' @param box_width is a number between 0 and 1 for the desire
+#' @param box_width is a number between 0 and 1 for the desired width of the violins in the plot. The default is 0.1.
 #' @param legend_name is a label for the legend, the default label is "Influencing Variable Intervals".
 #' @param ... arguments passed to ggplot2::theme
 #' 
