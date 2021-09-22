@@ -49,7 +49,7 @@ varviolin <- function(in_var, out_var,
          call. = FALSE)
   }
   
-  in_outdata <- in_out <- ylab <- xlab <- width <- aes <- cut_width <- NULL # Setting the variables to NULL first, appeasing R CMD check
+  in_outdata <- in_out <- width <- aes <- cut_width <- NULL # Setting the variables to NULL first, appeasing R CMD check
   
   #add error stops with validate_that   
   assertthat::validate_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")

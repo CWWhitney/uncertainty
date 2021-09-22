@@ -39,7 +39,7 @@ varscatter <- function(in_var, out_var,
   assertthat::validate_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
 
   # Setting the variables to NULL first, appeasing R CMD check
-  in_outdata <- in_out <- ylab <- xlab <- NULL 
+  in_outdata <- in_out <- NULL 
   
   in_out <- as.data.frame(cbind(in_var, out_var)) #create subset-able data
   

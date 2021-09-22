@@ -40,7 +40,7 @@ varkernelslice <- function(in_var, out_var,
   }
   
   # Setting the variables to NULL first, appeasing R CMD check
-  in_outdata <- in_out <- ylab <- xlab <- xvar <- yvar <- NULL 
+  in_outdata <- in_out <- xvar <- yvar <- NULL 
   
   #add error stops with validate_that   
   assertthat::validate_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
