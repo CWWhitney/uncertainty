@@ -9,6 +9,7 @@
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
 #' @param max_in_var is a value of the highest expected amount of a given influencing variable {in_var} for which the outcome variable {out_var} should be estimated (must be > {min_in_var}). 
 #' @param min_in_var is a value of the lowest expected amount of {in_var} for which the outcome variable {out_var} should be estimated (must be < {max_in_var}). 
+#' @param xlab_vars is the x axis title that describes the two variables being associated
 #' 
 #' @importFrom MASS kde2d
 #' @importFrom stats complete.cases
@@ -21,13 +22,16 @@
 #'
 #' @examples
 #' variable <- sample(x = 1:50, size = 20, replace = TRUE)
-#' out_var <- sample(x = 1000:5000, size = 20, replace = TRUE)
-#' varkernelslicerange(variable, out_var, 10, 20)
+#' outcome <- sample(x = 1000:5000, size = 20, replace = TRUE)
+#' varkernelslicerange(variable, outcome, 10, 20, 
+#' xlab_vars = "Dist. of outcome given influence variable range")
 #' 
 #' @export varkernelslicerange
-varkernelslicerange <- function(in_var, out_var, 
+varkernelslicerange <- function(in_var, 
+                                out_var, 
                                 min_in_var, 
-                                max_in_var) {
+                                max_in_var, 
+                                xlab_vars = "Outcome variable dist. given influence variable") {
   
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     
@@ -74,8 +78,9 @@ varkernelslicerange <- function(in_var, out_var,
   rbound <- which(in_outkernel$x == max(in_outkernel$x[which(in_outkernel$x <= max_in_var)]))
   
  graphics::plot(in_outkernel$y, rowMeans(in_outkernel$z[, lbound : rbound]), type = "l", col = "seagreen", lwd = 2,
-       xlab = paste("Value of the outcome variable for the influencing variable values between", as.character(min_in_var), "and", 
-                    as.character(max_in_var)), ylab = "Relative probability")
+       xlab = paste(xlab_vars, as.character(min_in_var), "to", 
+                    as.character(max_in_var)), 
+       ylab = "Relative probability")
   #for print we need x for max(in_outkernel$z[, lbound : rbound])
  
   print("Relative probability (y) of the outcome variable for the given values of the influencing variable (x).")
