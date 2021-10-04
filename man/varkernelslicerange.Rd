@@ -6,7 +6,13 @@
 based on a slice of 'z' from the Kernel density plot of the influencing variable and output 
 variable data.}
 \usage{
-varkernelslicerange(in_var, out_var, min_in_var, max_in_var)
+varkernelslicerange(
+  in_var,
+  out_var,
+  min_in_var,
+  max_in_var,
+  xlab_vars = "Outcome variable dist. given influence variable"
+)
 }
 \arguments{
 \item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
@@ -16,6 +22,8 @@ varkernelslicerange(in_var, out_var, min_in_var, max_in_var)
 \item{min_in_var}{is a value of the lowest expected amount of {in_var} for which the outcome variable {out_var} should be estimated (must be < {max_in_var}).}
 
 \item{max_in_var}{is a value of the highest expected amount of a given influencing variable {in_var} for which the outcome variable {out_var} should be estimated (must be > {min_in_var}).}
+
+\item{xlab_vars}{is the x axis title that describes the two variables being associated}
 }
 \description{
 Plot representing probabilities (shown along the y-axis) for the expected outcome variable (shown along the x-axis). 
@@ -23,8 +31,9 @@ This is a broad slice through the density kernel from uncertainty::varkernel() f
 }
 \examples{
 variable <- sample(x = 1:50, size = 20, replace = TRUE)
-out_var <- sample(x = 1000:5000, size = 20, replace = TRUE)
-varkernelslicerange(variable, out_var, 10, 20)
+outcome <- sample(x = 1000:5000, size = 20, replace = TRUE)
+varkernelslicerange(variable, outcome, 10, 20, 
+xlab_vars = "Dist. of outcome given influence variable range")
 
 }
 \keyword{density}
