@@ -2,6 +2,7 @@
 
 export(varkernel)
 export(varkernelslice)
+export(varkernelslice_data)
 export(varkernelslicerange)
 export(varscatter)
 export(varviolin)
