@@ -87,10 +87,24 @@ uncertainty::varviolin(in_var, out_var)
 `varkernelslicerange()` shows the influencing variable {in_var} value intervals, optimized interquartile ranges shown in `varviolin()` can be used to select a range to slice from the density kernel `varkernel()` as was done for a single variable value in `varkernelslice()`. Here we set the maximum variable value to 200 and the minimum to 100.
 
 ```{r, fig.width=7, fig.height=7}
-uncertainty::varkernelslicerange(in_var, out_var, 100, 200)
+uncertainty::varkernelslicerange(in_var = in_var, out_var = out_var, 
+                                 min_in_var = 100, max_in_var = 200)
 ```
 
 `varkernelslicerange()` plots the probabilities (shown along the y-axis) for the expected value of the outcome variable {out_var} (shown along the x-axis). As with `varkernelslice()` the probability values shown are relative, not absolute measures. They are the result of cuts through the density kernel `varkernel()`, which integrates to 1. 
+
+## Difference in probability of outcome variable given variable
+
+If we want to tell the difference in two distributions determined by the `varkernelslice()` ranges we can test the difference. We can extract the data with the `varkernelslice_data()` function.
+
+```{r}
+
+A <- varkernelslice_data(in_var, out_var, expectedin_var = 40)
+B <- varkernelslice_data(in_var, out_var, expectedin_var = 10)
+
+sum(A < sample(B, length(A))) / length(A)
+
+```
 
 This document was generated using R Markdown [@R-rmarkdown].
 
