@@ -6,6 +6,7 @@
 #' 
 #' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
+#' @param n_runs is the number of runs for the density surface with {MASS::kde2d}. Default is 100
 #' @param expectedin_var is the expected value of the input variable for which the outcome variable {out_var} should be estimated. 
 #' @param xlab is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".
 #' @param ylab is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".
@@ -27,6 +28,7 @@
 #' @export varkernelslice
 varkernelslice <- function(in_var, out_var, 
                            expectedin_var,  
+                           n_runs = 100,
                            ylab = "Relative probability", 
                            xlab = "Output values for the given influence variable values") {
   
@@ -61,10 +63,10 @@ varkernelslice <- function(in_var, out_var,
   
   #### kernel density estimation ####
   
-  ## create a density surface with kde2d with 100 grid points
+  ## create a density surface with kde2d with n_runs grid points
   in_outkernel <- MASS::kde2d(x = in_outdata$in_var, 
                               y = in_outdata$out_var, 
-                              n = 100)
+                              n = n_runs)
   
   ## select x and y for the graphics::plot
   Relative_probability <- in_outkernel$x
