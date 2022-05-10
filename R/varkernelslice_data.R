@@ -6,10 +6,8 @@
 #' 
 #' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
-#' @param n_runs is the number of runs for the density surface with {MASS::kde2d}. Default is 100
 #' @param expectedin_var is the expected value of the input variable for which the outcome variable {out_var} should be estimated. 
-#' @param xlab is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".
-#' @param ylab is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".
+#' @param n_runs is the number of runs for the resampling from the density surface, default is 100
 #' 
 #' @importFrom MASS kde2d
 #' @importFrom stats complete.cases
@@ -28,9 +26,7 @@
 #' @export varkernelslice_data
 varkernelslice_data <- function(in_var, out_var, 
                            expectedin_var,  
-                           n_runs = 100,
-                           ylab = "Relative probability", 
-                           xlab = "Output values for the given influence variable values") {
+                           n_runs = 100) {
   
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("Package \"ggplot2\" needed for this function to work. Please install it.",
@@ -63,19 +59,33 @@ varkernelslice_data <- function(in_var, out_var,
   
   #### kernel density estimation ####
   
-  ## create a density surface with kde2d with n_runs grid points
+  ## create a density surface with kde2d with 100 grid points
   in_outkernel <- MASS::kde2d(x = in_outdata$in_var, 
                               y = in_outdata$out_var, 
-                              n = n_runs)
+                              n = 100)
   
   # A list of x and y coordinates of the grid points of length n_runs 
   # z is an n[1] by n[2] matrix of the estimated density: 
   # rows correspond to the value of x = in_outdata$in_var
   # columns correspond to the value of y = in_outdata$out_var
-  ## generate x and y for analysis
-  
+  # generate x and y for analysis
+
   Relative_probability <- in_outkernel$z[, expectedin_var]
   Output_values <- in_outkernel$x
+ 
+  # create a data set with the selected data from the kernel density
+  data <- data.frame(Relative_probability, Output_values)
   
-  data.frame(Relative_probability, Output_values)
+  # resample the data to create a random sample
+  # assign the probability of the values based on the Relative_probability
+  data[sample(seq_len(nrow(data)),
+              size = n_runs,
+              prob = data$Relative_probability, 
+              replace = TRUE),]
+  
+  # return the resulting vector of the sampled 'Output_values'
+  
+  Output_values <- data$Output_values
+  
+  return(Output_values)
 }

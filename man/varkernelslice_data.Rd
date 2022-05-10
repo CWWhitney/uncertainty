@@ -5,14 +5,7 @@
 \title{Generate data set for estimated outcome variable values given the influencing variable, 
 based on a slice of 'z' from the kernel density plot of the variable and out_var data.}
 \usage{
-varkernelslice_data(
-  in_var,
-  out_var,
-  expectedin_var,
-  n_runs = 100,
-  ylab = "Relative probability",
-  xlab = "Output values for the given influence variable values"
-)
+varkernelslice_data(in_var, out_var, expectedin_var, n_runs = 100)
 }
 \arguments{
 \item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
@@ -21,11 +14,7 @@ varkernelslice_data(
 
 \item{expectedin_var}{is the expected value of the input variable for which the outcome variable {out_var} should be estimated.}
 
-\item{n_runs}{is the number of runs for the density surface with {MASS::kde2d}. Default is 100}
-
-\item{ylab}{is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".}
-
-\item{xlab}{is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".}
+\item{n_runs}{is the number of runs for the resampling from the density surface, default is 100}
 }
 \description{
 Plot representing probabilities (shown along the y-axis) for the expected value of the outcome variable (shown along the x-axis). 
