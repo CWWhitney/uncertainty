@@ -59,8 +59,8 @@ varkernelslicerange <- function(in_var,
   assertthat::validate_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
   
   #check that the min_in_var argument is consistent with the values in the kernel density
-  assertthat::validate_that(min(in_outkernel$x)> min_in_var, msg = "\"min_in_var\" value is too high.")
-  
+  # assertthat::validate_that(min(in_outkernel$x)> min_in_var, msg = "\"min_in_var\" value is too high.")
+
   #create subset-able data
   in_out <- as.data.frame(cbind(in_var, out_var)) 
   

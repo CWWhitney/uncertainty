@@ -68,13 +68,18 @@ varkernelslice <- function(in_var, out_var,
                               y = in_outdata$out_var, 
                               n = n_runs)
   
+  # A list of x and y coordinates of the grid points of length n_runs 
+  # z is an n[1] by n[2] matrix of the estimated density: 
+  # rows correspond to the value of x = in_outdata$in_var
+  # columns correspond to the value of y = in_outdata$out_var
+  
   ## select x and y for the graphics::plot
-  Relative_probability <- in_outkernel$x
-  Output_values <- in_outkernel$z[, expectedin_var]
+  Output_values <- in_outkernel$x
+  Relative_probability <- in_outkernel$z[, expectedin_var]
   
   ## cut through density kernel #####
-  graphics::plot(x = Relative_probability, 
-                 y = Output_values, 
+  graphics::plot(x = Output_values, 
+                 y = Relative_probability, 
                  type = "l", 
                  ylab = ylab, 
                  xlab = xlab, 
