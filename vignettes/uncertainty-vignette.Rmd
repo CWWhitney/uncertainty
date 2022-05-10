@@ -95,7 +95,7 @@ uncertainty::varkernelslicerange(in_var = in_var, out_var = out_var,
 
 ## Difference in probability of outcome variable given variable
 
-If we want to tell the difference in two distributions determined by the `varkernelslice()` ranges we can test the difference. We can extract the data with the `varkernelslice_data()` function.
+To tell the difference in two distributions determined by the `varkernelslice()` ranges we can test the difference. We can extract the data with the `varkernelslice_data()` function.
 
 ```{r}
 
