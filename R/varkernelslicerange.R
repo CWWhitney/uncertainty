@@ -9,7 +9,6 @@
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
 #' @param max_in_var is a value of the highest expected amount of a given influencing variable {in_var} for which the outcome variable {out_var} should be estimated (must be > {min_in_var}). 
 #' @param min_in_var is a value of the lowest expected amount of {in_var} for which the outcome variable {out_var} should be estimated (must be < {max_in_var}). 
-#' @param n_runs is the number of runs for the density surface with {MASS::kde2d}. Default is 100
 #' @param xlab_vars is the x axis title that describes the two variables being associated
 #' 
 #' @importFrom MASS kde2d
@@ -32,7 +31,6 @@ varkernelslicerange <- function(in_var,
                                 out_var, 
                                 min_in_var, 
                                 max_in_var, 
-                                n_runs = 100,
                                 xlab_vars = "Outcome variable dist. given influence variable") {
   
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -77,7 +75,7 @@ varkernelslicerange <- function(in_var,
   ## create a density surface with kde2d with n_runs grid points
   in_outkernel <- MASS::kde2d(x = in_outdata$in_var, 
                               y = in_outdata$out_var, 
-                              n = n_runs)
+                              n = 100)
   
   ## Cut through density kernel and averaging over a range of x-values (x = variable)
   # sets the boundaries of in_var values over which to average

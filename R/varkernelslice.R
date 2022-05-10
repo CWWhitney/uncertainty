@@ -6,7 +6,6 @@
 #' 
 #' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
-#' @param n_runs is the number of runs for the density surface with {MASS::kde2d}. Default is 100
 #' @param expectedin_var is the expected value of the input variable for which the outcome variable {out_var} should be estimated. 
 #' @param xlab is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".
 #' @param ylab is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".
@@ -27,8 +26,7 @@
 #' 
 #' @export varkernelslice
 varkernelslice <- function(in_var, out_var, 
-                           expectedin_var,  
-                           n_runs = 100,
+                           expectedin_var,
                            ylab = "Relative probability", 
                            xlab = "Output values for the given influence variable values") {
   
@@ -63,20 +61,22 @@ varkernelslice <- function(in_var, out_var,
   
   #### kernel density estimation ####
   
-  ## create a density surface with kde2d with n_runs grid points
+  ## create a density surface with kde2d with 100 grid points
   in_outkernel <- MASS::kde2d(x = in_outdata$in_var, 
                               y = in_outdata$out_var, 
-                              n = n_runs)
+                              n = 100)
   
   # A list of x and y coordinates of the grid points of length n_runs 
   # z is an n[1] by n[2] matrix of the estimated density: 
   # rows correspond to the value of x = in_outdata$in_var
   # columns correspond to the value of y = in_outdata$out_var
   
-  ## select x and y for the graphics::plot
-  Output_values <- in_outkernel$x
-  Relative_probability <- in_outkernel$z[, expectedin_var]
+  assertthat::validate_that(length(in_outkernel$z) >= expectedin_var, msg = "\"expectedin_var\" is not included in the z values from the kernel density. Try a different number.")
   
+  ## select x and y for the graphics::plot
+  Relative_probability <- in_outkernel$z[, expectedin_var]
+  Output_values <- in_outkernel$x
+ 
   ## cut through density kernel #####
   graphics::plot(x = Output_values, 
                  y = Relative_probability, 

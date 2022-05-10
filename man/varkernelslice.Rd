@@ -9,7 +9,6 @@ varkernelslice(
   in_var,
   out_var,
   expectedin_var,
-  n_runs = 100,
   ylab = "Relative probability",
   xlab = "Output values for the given influence variable values"
 )
@@ -20,8 +19,6 @@ varkernelslice(
 \item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
 
 \item{expectedin_var}{is the expected value of the input variable for which the outcome variable {out_var} should be estimated.}
-
-\item{n_runs}{is the number of runs for the density surface with {MASS::kde2d}. Default is 100}
 
 \item{ylab}{is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".}
 

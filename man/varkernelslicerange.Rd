@@ -11,7 +11,6 @@ varkernelslicerange(
   out_var,
   min_in_var,
   max_in_var,
-  n_runs = 100,
   xlab_vars = "Outcome variable dist. given influence variable"
 )
 }
@@ -23,8 +22,6 @@ varkernelslicerange(
 \item{min_in_var}{is a value of the lowest expected amount of {in_var} for which the outcome variable {out_var} should be estimated (must be < {max_in_var}).}
 
 \item{max_in_var}{is a value of the highest expected amount of a given influencing variable {in_var} for which the outcome variable {out_var} should be estimated (must be > {min_in_var}).}
-
-\item{n_runs}{is the number of runs for the density surface with {MASS::kde2d}. Default is 100}
 
 \item{xlab_vars}{is the x axis title that describes the two variables being associated}
 }
