@@ -21,10 +21,10 @@
 #' @examples
 #' in_var <- sample(x = 1:100, size = 25, replace = TRUE)
 #' out_var <- sample(x = 1000:7000, size = 25, replace = TRUE)
-#' varkernelslice_data(in_var, out_var, expectedin_var = 40)
+#' varslice_resample(in_var, out_var, expectedin_var = 40)
 #' 
-#' @export varkernelslice_data
-varkernelslice_data <- function(in_var, out_var, 
+#' @export varslice_resample
+varslice_resample <- function(in_var, out_var, 
                            expectedin_var,  
                            n_runs = 100) {
   
@@ -71,14 +71,14 @@ varkernelslice_data <- function(in_var, out_var,
   # generate x and y for analysis
 
   Relative_probability <- in_outkernel$z[, expectedin_var]
-  Output_values <- in_outkernel$x
+  Output_values <- in_outkernel$y
  
   # create a data set with the selected data from the kernel density
   data <- data.frame(Relative_probability, Output_values)
   
   # resample the data to create a random sample
   # assign the probability of the values based on the Relative_probability
-  data[sample(seq_len(nrow(data)),
+  data <- data[sample(seq_len(nrow(data)),
               size = n_runs,
               prob = data$Relative_probability, 
               replace = TRUE),]

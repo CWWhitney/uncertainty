@@ -2,9 +2,9 @@
 
 export(varkernel)
 export(varkernelslice)
-export(varkernelslice_data)
 export(varkernelslicerange)
 export(varscatter)
+export(varslice_resample)
 export(varviolin)
 importFrom(MASS,kde2d)
 importFrom(assertthat,see_if)
