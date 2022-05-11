@@ -1,18 +1,23 @@
 #' Generate data set for estimated outcome variable values given the influencing variable, 
 #' based on a slice of 'z' from the kernel density plot of the variable and out_var data.
 #'
-#' Plot representing probabilities (shown along the y-axis) for the expected value of the outcome variable (shown along the x-axis). 
-#' This is a cut through the density kernel from uncertainty::varkernel() function, which integrates to 1, the probability values are relative, not absolute measures.
+#' Resampling function for slices through a kernel density surface. First, a kernel density surface is produced based on in_var / out_var
+#' pairs. Then the function extracts values from this surface for a specified value of in_var (expectedin_var), extracting n_slice_points values along the way.
+#' Based on these points, 
 #' 
 #' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
 #' @param expectedin_var is the expected value of the input variable for which the outcome variable {out_var} should be estimated. 
-#' @param n_runs is the number of runs for the resampling from the density surface, default is 100
-#' @param out_var_sampling sampling scheme for extracting values from the probability surface. This is
+#' @param n Number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).
+#' @param n_samples is the number of samples to draw in the resampling procedure
+#' @param out_var_sampling sampling scheme for extracting values from the kernel density surface. This is
 #' used to create a vector of out_var values, for which the probabilities are extracted. NOTE that only these values can later be returned in the resampling process.
 #' This can either be a single number, which is then used to create evenly spaces points separated by intervals of the specified value
 #' (defaults to 1000th of the out_var range). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
 #' for the specified numbers are extracted (and only these values can be returned by the resampling).
+#' @return list of two elements: `slice` is a data.frame with columns Output_values and Relative_probability, which represents the 'slice' of the data
+#' that the resampling was based on; `resampled` is a vector of the values returned by the resampling (containing only numbers represented in the Output_values column of `slice`. 
+#' 
 #' 
 #' @importFrom MASS kde2d
 #' @importFrom stats complete.cases
@@ -44,8 +49,9 @@
 #' 
 #' @export varslice_resample
 varslice_resample <- function(in_var, out_var, 
-                           expectedin_var,  
-                           n_runs = 1000,
+                           expectedin_var, 
+                           n=100,
+                           n_samples = 1000,
                            out_var_sampling=(max(out_var)-min(out_var))/1000) {
 
   # some asserts on the out_var_sampling?
@@ -91,7 +97,7 @@ varslice_resample <- function(in_var, out_var,
   ## create a density surface with kde2d with 100 grid points
   in_outkernel <- MASS::kde2d(x = in_outdata$in_var, 
                               y = in_outdata$out_var, 
-                              n = 100)
+                              n = n)
   
   # A list of x and y coordinates of the grid points of length n_runs 
   # z is an n[1] by n[2] matrix of the estimated density: 
@@ -102,7 +108,7 @@ varslice_resample <- function(in_var, out_var,
   slice<-data.frame(Output_values=sampling_scheme,
                     Relative_probability=raster::extract(raster(in_outkernel),cbind(expectedin_var,sampling_scheme)))
   
-  data<-slice[sample(seq_len(nrow(slice)), size = n_runs, prob = slice$Relative_probability, 
+  data<-slice[sample(seq_len(nrow(slice)), size = n_samples, prob = slice$Relative_probability, 
                      replace = TRUE), ]
   Output_values <- data$Output_values
   return(list(slice=slice,
