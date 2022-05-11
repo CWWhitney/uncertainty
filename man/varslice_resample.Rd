@@ -5,7 +5,13 @@
 \title{Generate data set for estimated outcome variable values given the influencing variable, 
 based on a slice of 'z' from the kernel density plot of the variable and out_var data.}
 \usage{
-varslice_resample(in_var, out_var, expectedin_var, n_runs = 100)
+varslice_resample(
+  in_var,
+  out_var,
+  expectedin_var,
+  n_runs = 1000,
+  out_var_sampling = (max(out_var) - min(out_var))/1000
+)
 }
 \arguments{
 \item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
@@ -15,15 +21,34 @@ varslice_resample(in_var, out_var, expectedin_var, n_runs = 100)
 \item{expectedin_var}{is the expected value of the input variable for which the outcome variable {out_var} should be estimated.}
 
 \item{n_runs}{is the number of runs for the resampling from the density surface, default is 100}
+
+\item{out_var_sampling}{sampling scheme for extracting values from the probability surface. This is
+used to create a vector of out_var values, for which the probabilities are extracted. NOTE that only these values can later be returned in the resampling process.
+This can either be a single number, which is then used to create evenly spaces points separated by intervals of the specified value
+(defaults to 1000th of the out_var range). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
+for the specified numbers are extracted (and only these values can be returned by the resampling).}
 }
 \description{
 Plot representing probabilities (shown along the y-axis) for the expected value of the outcome variable (shown along the x-axis). 
 This is a cut through the density kernel from uncertainty::varkernel() function, which integrates to 1, the probability values are relative, not absolute measures.
 }
 \examples{
-in_var <- sample(x = 1:100, size = 25, replace = TRUE)
+in_var <- sample(x = 1:200, size = 25, replace = TRUE)
 out_var <- sample(x = 1000:7000, size = 25, replace = TRUE)
-varslice_resample(in_var, out_var, expectedin_var = 40)
+resampled<-varslice_resample(in_var, out_var, expectedin_var = 150)
+plot(resampled$slice$Output_values,resampled$slice$Relative_probability)
+hist(resampled$resampled)
+
+# with a coarser resolution (100 out_var units between points)
+resampled_coarse<-varslice_resample(in_var, out_var, expectedin_var = 40,out_var_sampling=100)
+plot(resampled_coarse$slice$Output_values,resampled_coarse$slice$Relative_probability)
+hist(resampled_coarse$resampled) 
+
+# for isolated values only
+resampled_iso<-varslice_resample(in_var, out_var, expectedin_var = 40,out_var_sampling=c(2000,3000,4000,5000))
+plot(resampled_iso$slice$Output_values,resampled_iso$slice$Relative_probability)
+hist(resampled_iso$resampled)  
+
 
 }
 \keyword{density}
