@@ -9,7 +9,8 @@ varslice_resample(
   in_var,
   out_var,
   expectedin_var,
-  n_runs = 1000,
+  n = 100,
+  n_samples = 1000,
   out_var_sampling = (max(out_var) - min(out_var))/1000
 )
 }
@@ -20,17 +21,24 @@ varslice_resample(
 
 \item{expectedin_var}{is the expected value of the input variable for which the outcome variable {out_var} should be estimated.}
 
-\item{n_runs}{is the number of runs for the resampling from the density surface, default is 100}
+\item{n}{Number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).}
 
-\item{out_var_sampling}{sampling scheme for extracting values from the probability surface. This is
+\item{n_samples}{is the number of samples to draw in the resampling procedure}
+
+\item{out_var_sampling}{sampling scheme for extracting values from the kernel density surface. This is
 used to create a vector of out_var values, for which the probabilities are extracted. NOTE that only these values can later be returned in the resampling process.
 This can either be a single number, which is then used to create evenly spaces points separated by intervals of the specified value
 (defaults to 1000th of the out_var range). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
 for the specified numbers are extracted (and only these values can be returned by the resampling).}
 }
+\value{
+list of two elements: `slice` is a data.frame with columns Output_values and Relative_probability, which represents the 'slice' of the data
+that the resampling was based on; `resampled` is a vector of the values returned by the resampling (containing only numbers represented in the Output_values column of `slice`.
+}
 \description{
-Plot representing probabilities (shown along the y-axis) for the expected value of the outcome variable (shown along the x-axis). 
-This is a cut through the density kernel from uncertainty::varkernel() function, which integrates to 1, the probability values are relative, not absolute measures.
+Resampling function for slices through a kernel density surface. First, a kernel density surface is produced based on in_var / out_var
+pairs. Then the function extracts values from this surface for a specified value of in_var (expectedin_var), extracting n_slice_points values along the way.
+Based on these points,
 }
 \examples{
 in_var <- sample(x = 1:200, size = 25, replace = TRUE)
