@@ -12,7 +12,7 @@
 #' @param n_samples is the number of samples to draw in the resampling procedure
 #' @param out_var_sampling sampling scheme for extracting values from the kernel density surface. This is
 #' used to create a vector of out_var values, for which the probabilities are extracted. NOTE that only these values can later be returned in the resampling process.
-#' This can either be a single number, which is then used to create evenly spaces points separated by intervals of the specified value
+#' This can either be a single number, which is then used to create evenly spaced points separated by intervals of the specified value
 #' (defaults to 1000th of the out_var range). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
 #' for the specified numbers are extracted (and only these values can be returned by the resampling).
 #' @return list of two elements: `slice` is a data.frame with columns Output_values and Relative_probability, which represents the 'slice' of the data
@@ -54,13 +54,6 @@ varslice_resample <- function(in_var, out_var,
                            n_samples = 1000,
                            out_var_sampling=(max(out_var)-min(out_var))/1000) {
 
-  # some asserts on the out_var_sampling?
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)==1)
-    sampling_scheme<-seq(min(out_var),max(out_var),out_var_sampling)
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)>1)
-    sampling_scheme<-out_var_sampling
-  # maybe add a warning/error, if the sampling scheme is very short or too long
-  # maybe also if the sampling scheme includes values outside the out_var range
   
     
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -72,16 +65,25 @@ varslice_resample <- function(in_var, out_var,
          call. = FALSE)
   }
   
+  # some asserts on the out_var_sampling?
+  if(is.numeric(out_var_sampling) & length(out_var_sampling)==1)
+    sampling_scheme<-seq(min(out_var),max(out_var),out_var_sampling)
+  if(is.numeric(out_var_sampling) & length(out_var_sampling)>1)
+    sampling_scheme<-out_var_sampling
+  # maybe add a warning/error, if the sampling scheme is very short or too long
+  # maybe also if the sampling scheme includes values outside the out_var range
+  
+  
   # Setting the variables to NULL first, appeasing R CMD check
   in_outdata <- in_out <- xvar <- yvar <- NULL 
   
-  #add error stops with validate_that   
-  assertthat::validate_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
-  assertthat::validate_that(is.numeric(in_var), msg = "\"in_var\" is not numeric.")
+  #add error stops with assert_that   
+  assertthat::assert_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
+  assertthat::assert_that(is.numeric(in_var), msg = "\"in_var\" is not numeric.")
   
-  assertthat::validate_that(is.numeric(expectedin_var), msg = "\"expectedin_var\" is not numeric.")
+  assertthat::assert_that(is.numeric(expectedin_var), msg = "\"expectedin_var\" is not numeric.")
   
-  assertthat::validate_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
+  assertthat::assert_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
   
   #create subset-able data
   in_out <- as.data.frame(cbind(in_var, out_var)) 

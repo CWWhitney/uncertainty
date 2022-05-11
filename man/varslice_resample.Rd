@@ -27,7 +27,7 @@ varslice_resample(
 
 \item{out_var_sampling}{sampling scheme for extracting values from the kernel density surface. This is
 used to create a vector of out_var values, for which the probabilities are extracted. NOTE that only these values can later be returned in the resampling process.
-This can either be a single number, which is then used to create evenly spaces points separated by intervals of the specified value
+This can either be a single number, which is then used to create evenly spaced points separated by intervals of the specified value
 (defaults to 1000th of the out_var range). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
 for the specified numbers are extracted (and only these values can be returned by the resampling).}
 }

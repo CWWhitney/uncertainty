@@ -9,6 +9,7 @@ varkernelslice(
   in_var,
   out_var,
   expectedin_var,
+  n = 100,
   ylab = "Relative probability",
   xlab = "Output values for the given influence variable values"
 )
@@ -19,6 +20,8 @@ varkernelslice(
 \item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
 
 \item{expectedin_var}{is the expected value of the input variable for which the outcome variable {out_var} should be estimated.}
+
+\item{n}{Number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).}
 
 \item{ylab}{is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".}
 
@@ -31,7 +34,7 @@ This is a cut through the density kernel from uncertainty::varkernel() function,
 \examples{
 in_var <- sample(x = 1:50, size = 20, replace = TRUE)
 out_var <- sample(x = 1000:5000, size = 20, replace = TRUE)
-varkernelslice(in_var, out_var, expectedin_var = 30)
+varkernelslice(in_var, out_var, expectedin_var = 1)
 
 }
 \keyword{density}
