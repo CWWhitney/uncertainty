@@ -26,6 +26,7 @@
 #' @importFrom assertthat validate_that
 #' @importFrom assertthat see_if
 #' @importFrom raster extract
+#' @importFrom raster raster
 #' 
 #' @keywords kernel density influence
 #'
@@ -33,26 +34,31 @@
 #' in_var <- sample(x = 1:200, size = 25, replace = TRUE)
 #' out_var <- sample(x = 1000:7000, size = 25, replace = TRUE)
 #' resampled<-varslice_resample(in_var, out_var, expectedin_var = 150)
-#' plot(resampled$slice$Output_values,resampled$slice$Relative_probability)
+#' plot(resampled$slice$Output_values,
+#' resampled$slice$Relative_probability)
 #' hist(resampled$resampled)
 #' 
 #' # with a coarser resolution (100 out_var units between points)
-#' resampled_coarse<-varslice_resample(in_var, out_var, expectedin_var = 40,out_var_sampling=100)
-#' plot(resampled_coarse$slice$Output_values,resampled_coarse$slice$Relative_probability)
+#' resampled_coarse <- varslice_resample(in_var, out_var, 
+#' expectedin_var = 40,out_var_sampling=100)
+#' plot(resampled_coarse$slice$Output_values,
+#' resampled_coarse$slice$Relative_probability)
 #' hist(resampled_coarse$resampled) 
 #' 
 #' # for isolated values only
-#' resampled_iso<-varslice_resample(in_var, out_var, expectedin_var = 40,out_var_sampling=c(2000,3000,4000,5000))
-#' plot(resampled_iso$slice$Output_values,resampled_iso$slice$Relative_probability)
+#' resampled_iso <- varslice_resample(in_var, out_var, 
+#' expectedin_var = 40,out_var_sampling=c(2000,3000,4000,5000))
+#' plot(resampled_iso$slice$Output_values,
+#' resampled_iso$slice$Relative_probability)
 #' hist(resampled_iso$resampled)  
 #' 
 #' 
 #' @export varslice_resample
 varslice_resample <- function(in_var, out_var, 
                            expectedin_var, 
-                           n=100,
+                           n = 100,
                            n_samples = 1000,
-                           out_var_sampling=(max(out_var)-min(out_var))/1000) {
+                           out_var_sampling = (max(out_var)-min(out_var))/1000) {
 
   
     
@@ -66,13 +72,16 @@ varslice_resample <- function(in_var, out_var,
   }
   
   # some asserts on the out_var_sampling?
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)==1)
+  if(is.numeric(out_var_sampling) & length(out_var_sampling)==1) {
     sampling_scheme<-seq(min(out_var),max(out_var),out_var_sampling)
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)>1)
+  }
+  
+  if(is.numeric(out_var_sampling) & length(out_var_sampling)>1) {
     sampling_scheme<-out_var_sampling
+  }
+  
   # maybe add a warning/error, if the sampling scheme is very short or too long
   # maybe also if the sampling scheme includes values outside the out_var range
-  
   
   # Setting the variables to NULL first, appeasing R CMD check
   in_outdata <- in_out <- xvar <- yvar <- NULL 
@@ -107,12 +116,18 @@ varslice_resample <- function(in_var, out_var,
   # columns correspond to the value of y = in_outdata$out_var
   # generate x and y for analysis
 
-  slice<-data.frame(Output_values=sampling_scheme,
-                    Relative_probability=raster::extract(raster(in_outkernel),cbind(expectedin_var,sampling_scheme)))
+  slice<-data.frame(Output_values = sampling_scheme,
+                    Relative_probability = raster::extract(raster::raster(in_outkernel),
+                                                         cbind(expectedin_var,
+                                                               sampling_scheme)))
   
-  data<-slice[sample(seq_len(nrow(slice)), size = n_samples, prob = slice$Relative_probability, 
+  data<-slice[sample(seq_len(nrow(slice)), 
+                     size = n_samples, 
+                     prob = slice$Relative_probability, 
                      replace = TRUE), ]
+  
   Output_values <- data$Output_values
+  
   return(list(slice=slice,
               resampled=Output_values))
   

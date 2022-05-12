@@ -44,17 +44,22 @@ Based on these points,
 in_var <- sample(x = 1:200, size = 25, replace = TRUE)
 out_var <- sample(x = 1000:7000, size = 25, replace = TRUE)
 resampled<-varslice_resample(in_var, out_var, expectedin_var = 150)
-plot(resampled$slice$Output_values,resampled$slice$Relative_probability)
+plot(resampled$slice$Output_values,
+resampled$slice$Relative_probability)
 hist(resampled$resampled)
 
 # with a coarser resolution (100 out_var units between points)
-resampled_coarse<-varslice_resample(in_var, out_var, expectedin_var = 40,out_var_sampling=100)
-plot(resampled_coarse$slice$Output_values,resampled_coarse$slice$Relative_probability)
+resampled_coarse <- varslice_resample(in_var, out_var, 
+expectedin_var = 40,out_var_sampling=100)
+plot(resampled_coarse$slice$Output_values,
+resampled_coarse$slice$Relative_probability)
 hist(resampled_coarse$resampled) 
 
 # for isolated values only
-resampled_iso<-varslice_resample(in_var, out_var, expectedin_var = 40,out_var_sampling=c(2000,3000,4000,5000))
-plot(resampled_iso$slice$Output_values,resampled_iso$slice$Relative_probability)
+resampled_iso <- varslice_resample(in_var, out_var, 
+expectedin_var = 40,out_var_sampling=c(2000,3000,4000,5000))
+plot(resampled_iso$slice$Output_values,
+resampled_iso$slice$Relative_probability)
 hist(resampled_iso$resampled)  
 
 
