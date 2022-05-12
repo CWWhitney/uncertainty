@@ -7,7 +7,7 @@
 #' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
 #' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
 #' @param expectedin_var is the expected value of the input variable for which the outcome variable {out_var} should be estimated. 
-#' @param n Number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).
+#' @param n is the number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).
 #' @param xlab is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".
 #' @param ylab is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".
 #' 
@@ -17,13 +17,15 @@
 #' @importFrom graphics plot
 #' @importFrom assertthat validate_that
 #' @importFrom assertthat see_if
+#' @importFrom raster extract
+#' @importFrom raster raster
 #' 
 #' @keywords kernel density influence
 #'
 #' @examples
 #' in_var <- sample(x = 1:50, size = 20, replace = TRUE)
 #' out_var <- sample(x = 1000:5000, size = 20, replace = TRUE)
-#' varkernelslice(in_var, out_var, expectedin_var = 1)
+#' varkernelslice(in_var, out_var, expectedin_var = 10)
 #' 
 #' @export varkernelslice
 varkernelslice <- function(in_var, out_var, 
@@ -41,7 +43,18 @@ varkernelslice <- function(in_var, out_var,
          call. = FALSE)
   }
   
-  out_var_sampling=n
+  # establish n for density 
+  out_var_sampling <- n
+  
+  # some asserts on the out_var_sampling?
+  if(is.numeric(out_var_sampling) & length(out_var_sampling)==1) {
+    sampling_scheme<-seq(min(out_var),max(out_var),out_var_sampling)
+  }
+  
+  if(is.numeric(out_var_sampling) & length(out_var_sampling)>1) {
+    sampling_scheme<-out_var_sampling
+  }
+  
   
   # Setting the variables to NULL first, appeasing R CMD check
   in_outdata <- in_out <- xvar <- yvar <- NULL 
@@ -83,8 +96,10 @@ varkernelslice <- function(in_var, out_var,
   #Relative_probability <- in_outkernel$z[, expectedin_var]
   #Output_values <- in_outkernel$x
  
-  slice<-data.frame(Output_values=sampling_scheme,
-                    Relative_probability=raster::extract(raster(in_outkernel),cbind(expectedin_var,sampling_scheme)))
+  slice<-data.frame(Output_values = sampling_scheme,
+                    Relative_probability = raster::extract(raster::raster(in_outkernel),
+                         cbind(expectedin_var,
+                               sampling_scheme)))
   
   
   
