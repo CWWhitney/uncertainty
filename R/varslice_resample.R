@@ -13,7 +13,7 @@
 #' @param out_var_sampling sampling scheme for extracting values from the kernel density surface. This is
 #' used to create a vector of out_var values, for which the probabilities are extracted. NOTE that only these values can later be returned in the resampling process.
 #' This can either be a single number, which is then used to create evenly spaced points separated by intervals of the specified value
-#' (defaults to 1000th of the out_var range). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
+#' (defaults to 1000th of the out_var range but could be changed to n_samples). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
 #' for the specified numbers are extracted (and only these values can be returned by the resampling).
 #' @return list of two elements: `slice` is a data.frame with columns Output_values and Relative_probability, which represents the 'slice' of the data
 #' that the resampling was based on; `resampled` is a vector of the values returned by the resampling (containing only numbers represented in the Output_values column of `slice`. 
@@ -46,10 +46,8 @@
 #' hist(resampled_coarse$resampled) 
 #' 
 #' # for isolated values only
-#' resampled_iso <- varslice_resample(in_var, out_var, 
-#' expectedin_var = 40,out_var_sampling=c(2000,3000,4000,5000))
-#' plot(resampled_iso$slice$Output_values,
-#' resampled_iso$slice$Relative_probability)
+#' resampled_iso <- varslice_resample(in_var, out_var, expectedin_var = 40, out_var_sampling = c(2000,3000,4000,5000))
+#' plot(resampled_iso$slice$Output_values, resampled_iso$slice$Relative_probability)
 #' hist(resampled_iso$resampled)  
 #' 
 #' 
