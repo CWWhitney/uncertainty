@@ -43,19 +43,6 @@ varkernelslice <- function(in_var, out_var,
          call. = FALSE)
   }
   
-  # establish n for density 
-  out_var_sampling <- n
-  
-  # some asserts on the out_var_sampling?
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)==1) {
-    sampling_scheme<-seq(min(out_var),max(out_var),out_var_sampling)
-  }
-  
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)>1) {
-    sampling_scheme<-out_var_sampling
-  }
-  
-  
   # Setting the variables to NULL first, appeasing R CMD check
   in_outdata <- in_out <- xvar <- yvar <- NULL 
   
@@ -96,6 +83,11 @@ varkernelslice <- function(in_var, out_var,
   #Relative_probability <- in_outkernel$z[, expectedin_var]
   #Output_values <- in_outkernel$x
  
+  # deteermine the sampling_scheme
+  sampling_scheme<-seq(min(out_var),
+                       max(out_var),
+                       n)
+  
   slice<-data.frame(Output_values = sampling_scheme,
                     Relative_probability = raster::extract(raster::raster(in_outkernel),
                          cbind(expectedin_var,
