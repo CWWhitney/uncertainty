@@ -66,7 +66,7 @@ In `varkernel()` the density (z) over the entire plot integrates to one, and the
 `varkernelslice()` calculates the estimated outcome variable {out_var} given the expected value of the influence variable of interest {in_var}, based on a slice of 'z' from the Kernel density calculated with `varkernel()`. The `expectedvariable` parameter is set to 30.
 
 ```{r, fig.width=7, fig.height=7}
-uncertainty::varkernelslice(in_var, out_var, expectedin_var = 30)
+uncertainty::varkernelslice(in_var, out_var, expectedin_var = 300)
 ```
 
 `varkernelslice()` plots the probabilities (shown along the y-axis) for the expected value of the outcome variable {out_var} (shown along the x-axis). Since this is a cut through the density kernel `varkernel()`, which integrates to 1, the probability values are relative, not absolute measures.
@@ -92,19 +92,6 @@ uncertainty::varkernelslicerange(in_var = in_var, out_var = out_var,
 ```
 
 `varkernelslicerange()` plots the probabilities (shown along the y-axis) for the expected value of the outcome variable {out_var} (shown along the x-axis). As with `varkernelslice()` the probability values shown are relative, not absolute measures. They are the result of cuts through the density kernel `varkernel()`, which integrates to 1. 
-
-## Difference in probability of outcome variable given variable
-
-To tell the difference in two distributions determined by the `varkernelslice()` ranges we can test the difference. We can extract the data with the `varslice_resample()` function.
-
-```{r}
-
-A <- varslice_resample(in_var, out_var, expectedin_var = 40, n_runs = 10)
-B <- varslice_resample(in_var, out_var, expectedin_var = 10, n_runs = 10)
-
-sum(A < sample(B, length(A))) / length(A)
-
-```
 
 This document was generated using R Markdown [@R-rmarkdown].
 
