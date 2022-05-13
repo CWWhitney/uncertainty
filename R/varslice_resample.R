@@ -70,12 +70,13 @@ varslice_resample <- function(in_var, out_var,
   }
   
   # some asserts on the out_var_sampling?
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)==1) {
-    sampling_scheme<-seq(min(out_var),max(out_var),(max(out_var)-min(out_var))/out_var_sampling)
+  if (is.numeric(out_var_sampling) & length(out_var_sampling) == 
+      1) {
+    sampling_scheme <- seq(min(out_var), max(out_var), diff(range(out_var))/out_var_sampling)
   }
-  
-  if(is.numeric(out_var_sampling) & length(out_var_sampling)>1) {
-    sampling_scheme<-out_var_sampling
+  if (is.numeric(out_var_sampling) & length(out_var_sampling) > 
+      1) {
+    sampling_scheme <- out_var_sampling
   }
   
   # maybe add a warning/error, if the sampling scheme is very short or too long
