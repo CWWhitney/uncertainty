@@ -12,8 +12,8 @@
 #' @param n_samples is the number of samples to draw in the resampling procedure
 #' @param out_var_sampling sampling scheme for extracting values from the kernel density surface. This is
 #' used to create a vector of out_var values, for which the probabilities are extracted. NOTE that only these values can later be returned in the resampling process.
-#' This can either be a single number, which is then used to create evenly spaced points separated by intervals of the specified value
-#' (defaults to 1000th of the out_var range but could be changed to n_samples). It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
+#' This can either be a single number, which is then used to create as many evenly spaced points (defaults to 1000).
+#' It is also possible to provide a numeric vector of values within the out_var range, in which case only probabilities
 #' for the specified numbers are extracted (and only these values can be returned by the resampling).
 #' @return list of two elements: `slice` is a data.frame with columns Output_values and Relative_probability, which represents the 'slice' of the data
 #' that the resampling was based on; `resampled` is a vector of the values returned by the resampling (containing only numbers represented in the Output_values column of `slice`. 
@@ -71,7 +71,7 @@ varslice_resample <- function(in_var, out_var,
   
   # some asserts on the out_var_sampling?
   if(is.numeric(out_var_sampling) & length(out_var_sampling)==1) {
-    sampling_scheme<-seq(min(out_var),max(out_var),out_var_sampling)
+    sampling_scheme<-seq(min(out_var),max(out_var),(max(out_var)-min(out_var))/out_var_sampling)
   }
   
   if(is.numeric(out_var_sampling) & length(out_var_sampling)>1) {
