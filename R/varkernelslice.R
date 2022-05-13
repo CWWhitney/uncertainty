@@ -83,7 +83,7 @@ varkernelslice <- function(in_var, out_var,
   #Relative_probability <- in_outkernel$z[, expectedin_var]
   #Output_values <- in_outkernel$x
  
-  # deteermine the sampling_scheme
+  # determine the sampling_scheme
   sampling_scheme<-seq(min(out_var),
                        max(out_var),
                        n)
