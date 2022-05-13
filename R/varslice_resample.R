@@ -56,7 +56,7 @@ varslice_resample <- function(in_var, out_var,
                            expectedin_var, 
                            n = 100,
                            n_samples = 1000,
-                           out_var_sampling = (max(out_var)-min(out_var))/1000) {
+                           out_var_sampling = 1000) {
 
   
     
