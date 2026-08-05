@@ -16,13 +16,16 @@ varkernel(
 )
 }
 \arguments{
-\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
+\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}.}
 
-\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
+\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.}
 
-\item{xlab}{is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".}
+\item{xlab}{is a label for the influencing variable \code{in_var} on the x axis, the default label is "Influencing variable".}
 
-\item{ylab}{is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".}
+\item{ylab}{is a label for the outcome variable \code{out_var} on the y axis, the default label is "Outcome variable".}
+}
+\value{
+Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the density surface plot with \code{graphics::filled.contour()}.
 }
 \description{
 Perform a two-dimensional kernel density estimation for an outcome variable and a given influencing variable.

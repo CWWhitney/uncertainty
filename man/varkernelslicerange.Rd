@@ -15,15 +15,18 @@ varkernelslicerange(
 )
 }
 \arguments{
-\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
+\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}.}
 
-\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
+\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.}
 
-\item{min_in_var}{is a value of the lowest expected amount of {in_var} for which the outcome variable {out_var} should be estimated (must be < {max_in_var}).}
+\item{min_in_var}{is a value of the lowest expected amount of \code{in_var} for which the outcome variable \code{out_var} should be estimated (must be < \code{max_in_var}).}
 
-\item{max_in_var}{is a value of the highest expected amount of a given influencing variable {in_var} for which the outcome variable {out_var} should be estimated (must be > {min_in_var}).}
+\item{max_in_var}{is a value of the highest expected amount of a given influencing variable \code{in_var} for which the outcome variable \code{out_var} should be estimated (must be > \code{min_in_var}).}
 
 \item{xlab_vars}{is the x axis title that describes the two variables being associated}
+}
+\value{
+Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the sliced probability plot with \code{graphics::plot()}.
 }
 \description{
 Plot representing probabilities (shown along the y-axis) for the expected outcome variable (shown along the x-axis). 

@@ -15,11 +15,11 @@ varslice_resample(
 )
 }
 \arguments{
-\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
+\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}.}
 
-\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
+\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.}
 
-\item{expectedin_var}{is the expected value of the input variable for which the outcome variable {out_var} should be estimated.}
+\item{expectedin_var}{is the expected value of the input variable for which the outcome variable \code{out_var} should be estimated.}
 
 \item{n}{Number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).}
 
@@ -56,7 +56,10 @@ resampled_coarse$slice$Relative_probability)
 hist(resampled_coarse$resampled) 
 
 # for isolated values only
-resampled_iso <- varslice_resample(in_var, out_var, expectedin_var = 40, out_var_sampling = c(2000,3000,4000,5000))
+resampled_iso <- varslice_resample(in_var, out_var, 
+expectedin_var = 40, 
+out_var_sampling = c(2000,3000,4000,5000))
+
 plot(resampled_iso$slice$Output_values, resampled_iso$slice$Relative_probability)
 hist(resampled_iso$resampled)  
 

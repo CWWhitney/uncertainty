@@ -5,17 +5,19 @@
 #' Plot representing probabilities (shown along the y-axis) for the expected outcome variable (shown along the x-axis). 
 #' This is a broad slice through the density kernel from uncertainty::varkernel() function, which integrates to 1, the probability values are relative, not absolute measures.
 #' 
-#' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
-#' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
-#' @param max_in_var is a value of the highest expected amount of a given influencing variable {in_var} for which the outcome variable {out_var} should be estimated (must be > {min_in_var}). 
-#' @param min_in_var is a value of the lowest expected amount of {in_var} for which the outcome variable {out_var} should be estimated (must be < {max_in_var}). 
+#' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}. 
+#' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.
+#' @param max_in_var is a value of the highest expected amount of a given influencing variable \code{in_var} for which the outcome variable \code{out_var} should be estimated (must be > \code{min_in_var}). 
+#' @param min_in_var is a value of the lowest expected amount of \code{in_var} for which the outcome variable \code{out_var} should be estimated (must be < \code{max_in_var}). 
 #' @param xlab_vars is the x axis title that describes the two variables being associated
+#' 
+#' @return Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the sliced probability plot with \code{graphics::plot()}.
 #' 
 #' @importFrom MASS kde2d
 #' @importFrom stats complete.cases
 #' @importFrom graphics filled.contour
 #' @importFrom graphics plot
-#' @importFrom assertthat validate_that
+#' @importFrom assertthat assert_that
 #' @importFrom assertthat see_if
 #' 
 #' @keywords kernel density influence
@@ -46,18 +48,20 @@ varkernelslicerange <- function(in_var,
   # Setting the variables to NULL first, appeasing R CMD check
   in_outdata <- in_out <- NULL 
   
-  #add error stops with validate_that   
-  assertthat::validate_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
-  assertthat::validate_that(is.numeric(in_var), msg = "\"in_var\" is not numeric.")
+  #add error stops with assert_that   
+  assertthat::assert_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
+  assertthat::assert_that(is.numeric(in_var), msg = "\"in_var\" is not numeric.")
   
-  assertthat::validate_that(is.numeric(min_in_var), msg = "\"min_in_var\" is not numeric.")
+  assertthat::assert_that(is.numeric(min_in_var), msg = "\"min_in_var\" is not numeric.")
   
-  assertthat::validate_that(is.numeric(max_in_var), msg = "\"max_in_var\" is not numeric.")
+  assertthat::assert_that(is.numeric(max_in_var), msg = "\"max_in_var\" is not numeric.")
   
-  assertthat::validate_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
+  assertthat::assert_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
+  
+  assertthat::assert_that(min_in_var < max_in_var, msg = "\"min_in_var\" must be less than \"max_in_var\".")
   
   #check that the min_in_var argument is consistent with the values in the kernel density
-  # assertthat::validate_that(min(in_outkernel$x)> min_in_var, msg = "\"min_in_var\" value is too high.")
+  # assertthat::assert_that(min(in_outkernel$x)> min_in_var, msg = "\"min_in_var\" value is too high.")
 
   #create subset-able data
   in_out <- as.data.frame(cbind(in_var, out_var)) 

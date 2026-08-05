@@ -12,13 +12,16 @@ varscatter(
 )
 }
 \arguments{
-\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
+\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}.}
 
-\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
+\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.}
 
-\item{xlab}{is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".}
+\item{xlab}{is a label for the influencing variable \code{in_var} on the x axis, the default label is "Influencing variable".}
 
-\item{ylab}{is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".}
+\item{ylab}{is a label for the outcome variable \code{out_var} on the y axis, the default label is "Outcome variable".}
+}
+\value{
+Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the scatter/histogram plot with \code{psych::scatter.hist()}.
 }
 \description{
 scatter plot of an influencing variable (x) and an outcome variable (y) with associated and estimated densities (using a loess smooth) given by the red dot (mean) and red ellipses (1 and 2 sigma from mean). The red line going across the plot shows the linear fit. Histograms are shown with smooth lines (loess smooth linear fits) density curves. The numeric value in the upper right gives the Spearman correlation coefficient between the influencing variable and the outcome variable.

@@ -15,19 +15,22 @@ varviolin(
 )
 }
 \arguments{
-\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
+\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}.}
 
-\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
+\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.}
 
-\item{xlab}{is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".}
+\item{xlab}{is a label for the influencing variable \code{in_var} on the x axis, the default label is "Influencing variable".}
 
-\item{ylab}{is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".}
+\item{ylab}{is a label for the outcome variable \code{out_var} on the y axis, the default label is "Outcome variable".}
 
 \item{box_width}{is a number between 0 and 1 for the desired width of the violins in the plot. The default is 0.1.}
 
 \item{legend_name}{is a label for the legend, the default label is "Influencing Variable Intervals".}
 
 \item{...}{arguments passed to ggplot2::theme}
+}
+\value{
+Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the violin/boxplot with \code{ggplot2}.
 }
 \description{
 Violin plots of values of an influencing variable (x) and an outcome variable (y) with different intervals of the influencing variable.

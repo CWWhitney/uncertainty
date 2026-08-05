@@ -3,13 +3,15 @@
 #' Violin plots of values of an influencing variable (x) and an outcome variable (y) with different intervals of the influencing variable.
 #' Determine different possible variable intervals by calculating the optimal interval width for the given variable using the IQR() function in the stats() package of R, after the Freedman-Diaconis rule (IQR = interquartile range).
 #'
-#' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
-#' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
-#' @param xlab is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".
-#' @param ylab is a label for the outcome variable {out_var} on the y axis, the default label is "Outcome variable".
+#' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}. 
+#' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.
+#' @param xlab is a label for the influencing variable \code{in_var} on the x axis, the default label is "Influencing variable".
+#' @param ylab is a label for the outcome variable \code{out_var} on the y axis, the default label is "Outcome variable".
 #' @param box_width is a number between 0 and 1 for the desired width of the violins in the plot. The default is 0.1.
 #' @param legend_name is a label for the legend, the default label is "Influencing Variable Intervals".
 #' @param ... arguments passed to ggplot2::theme
+#' 
+#' @return Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the violin/boxplot with \code{ggplot2}.
 #' 
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 aes
@@ -22,7 +24,7 @@
 #' @importFrom ggplot2 ylab
 #' @importFrom stats complete.cases
 #' @importFrom stats IQR
-#' @importFrom assertthat validate_that
+#' @importFrom assertthat assert_that
 #' @importFrom assertthat see_if
 #' 
 #' @keywords variable out_var Freedman-Diaconis IQR violin
@@ -51,11 +53,11 @@ varviolin <- function(in_var, out_var,
   
   in_outdata <- in_out <- width <- aes <- cut_width <- NULL # Setting the variables to NULL first, appeasing R CMD check
   
-  #add error stops with validate_that   
-  assertthat::validate_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
-  assertthat::validate_that(is.numeric(in_var), msg = "\"in_var\" is not numeric.")
+  #add error stops with assert_that   
+  assertthat::assert_that(length(in_var) == length(out_var), msg = "\"in_var\" and \"out_var\" are not equal lengths.")
+  assertthat::assert_that(is.numeric(in_var), msg = "\"in_var\" is not numeric.")
 
-  assertthat::validate_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
+  assertthat::assert_that(is.numeric(out_var), msg = "\"out_var\" is not numeric.")
   
   #create subset-able data
   in_out <- as.data.frame(cbind(in_var, out_var)) 

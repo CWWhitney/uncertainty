@@ -15,17 +15,20 @@ varkernelslice(
 )
 }
 \arguments{
-\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}.}
+\item{in_var}{is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}.}
 
-\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.}
+\item{out_var}{is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.}
 
-\item{expectedin_var}{is the expected value of the input variable for which the outcome variable {out_var} should be estimated.}
+\item{expectedin_var}{is the expected value of the input variable for which the outcome variable \code{out_var} should be estimated.}
 
 \item{n}{is the number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).}
 
 \item{ylab}{is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".}
 
-\item{xlab}{is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".}
+\item{xlab}{is a label for the influencing variable \code{in_var} on the x axis, the default label is "Influencing variable".}
+}
+\value{
+Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the sliced probability plot with \code{graphics::plot()}.
 }
 \description{
 Plot representing probabilities (shown along the y-axis) for the expected value of the outcome variable (shown along the x-axis). 

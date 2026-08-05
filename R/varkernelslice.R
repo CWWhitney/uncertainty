@@ -4,18 +4,20 @@
 #' Plot representing probabilities (shown along the y-axis) for the expected value of the outcome variable (shown along the x-axis). 
 #' This is a cut through the density kernel from uncertainty::varkernel() function, which integrates to 1, the probability values are relative, not absolute measures.
 #' 
-#' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable {out_var}. 
-#' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable {in_var}.
-#' @param expectedin_var is the expected value of the input variable for which the outcome variable {out_var} should be estimated. 
+#' @param in_var is a vector of observations of a given influencing variable corresponding to another list with observed values of an outcome variable \code{out_var}. 
+#' @param out_var is a vector of observed values of an outcome variable corresponding to another list with observations of a given influencing variable \code{in_var}.
+#' @param expectedin_var is the expected value of the input variable for which the outcome variable \code{out_var} should be estimated. 
 #' @param n is the number of grid points in each direction. Can be scalar or a length-2 integer vector (passed to the kde2d kernel density function of the MASS package).
-#' @param xlab is a label for the influencing variable {in_var} on the x axis, the default label is "Influencing variable".
+#' @param xlab is a label for the influencing variable \code{in_var} on the x axis, the default label is "Influencing variable".
 #' @param ylab is a label for the relative probability along the cut through the density kernel on the y axis, the default label is "Relative probability".
+#' 
+#' @return Invisibly returns the descriptive character string printed to the console. Called primarily for its side effect of drawing the sliced probability plot with \code{graphics::plot()}.
 #' 
 #' @importFrom MASS kde2d
 #' @importFrom stats complete.cases
 #' @importFrom graphics filled.contour
 #' @importFrom graphics plot
-#' @importFrom assertthat validate_that
+#' @importFrom assertthat assert_that
 #' @importFrom assertthat see_if
 #' @importFrom raster extract
 #' @importFrom raster raster
