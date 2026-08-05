@@ -93,6 +93,26 @@ uncertainty::varkernelslicerange(in_var = in_var, out_var = out_var,
 
 `varkernelslicerange()` plots the probabilities (shown along the y-axis) for the expected value of the outcome variable {out_var} (shown along the x-axis). As with `varkernelslice()` the probability values shown are relative, not absolute measures. They are the result of cuts through the density kernel `varkernel()`, which integrates to 1. 
 
+## Resampling from the estimated outcome variable distribution
+
+`varslice_resample()` builds on the same slice through the density kernel used by `varkernelslice()`, but instead of only plotting the relative probabilities it draws a new sample of outcome variable {out_var} values from that slice. This is useful, for example, when the estimated distribution of {out_var} for a given value of {in_var} needs to be reused as an input elsewhere, such as in a Monte Carlo simulation. The `out_var_sampling` parameter controls the resolution of the slice (the number of evenly spaced points, or a vector of specific {out_var} values), and `n_samples` controls how many values are resampled.
+
+```{r, fig.width=7, fig.height=7}
+resampled <- uncertainty::varslice_resample(in_var, out_var, expectedin_var = 300)
+```
+
+The `slice` element of the returned list is a data.frame of `Output_values` and their `Relative_probability`, i.e. the same information plotted by `varkernelslice()`.
+
+```{r, fig.width=7, fig.height=7}
+plot(resampled$slice$Output_values, resampled$slice$Relative_probability)
+```
+
+The `resampled` element is a vector of `n_samples` outcome variable {out_var} values drawn with probability proportional to the density slice.
+
+```{r, fig.width=7, fig.height=7}
+hist(resampled$resampled)
+```
+
 This document was generated using R Markdown [@R-rmarkdown].
 
 # References
