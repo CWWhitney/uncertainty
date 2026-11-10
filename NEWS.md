@@ -1,3 +1,8 @@
+# uncertainty (development)
+
+- Documented how this package differs from and complements the CRAN package
+  `uncertainty` (see `COMPARISON.md`).
+
 # uncertainty 0.1.0
 
 Initial release of the `uncertainty` package, a collection of functions for

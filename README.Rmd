@@ -9,6 +9,12 @@ output: github_document
 A collection of functions for use in assessing uncertainty. Install using 
 `devtools::install_github("CWWhitney/uncertainty")`
 
+**Note:** this package is unrelated to the CRAN package
+[`uncertainty`](https://CRAN.R-project.org/package=uncertainty) (Gasca-Aragon),
+which *computes* uncertainty (Gaussian, Monte Carlo, Kragten). This package
+*visualises* uncertainty in simulation outputs, so the two complement each
+other. See [COMPARISON.md](COMPARISON.md).
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
